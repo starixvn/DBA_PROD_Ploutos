@@ -1,0 +1,17 @@
+version: '3.3'
+services:
+  prometheus:
+    image: prom/mysqld-exporter
+    container_name: PrometheusExporter_PloutosDB
+    hostname: PrometheusExporter_PloutosDB
+    restart: always
+    networks:
+      - ploutos-backend
+    environment:
+      DATA_SOURCE_NAME: "exporter:VcyA%)|($$D>`}5aF&F$${U3EKgOxW$$$$x>@(PloutosDB:3306)/"
+    expose:
+      - '9104'
+networks:
+  ploutos-backend:
+    external:
+      name: ploutos-backend

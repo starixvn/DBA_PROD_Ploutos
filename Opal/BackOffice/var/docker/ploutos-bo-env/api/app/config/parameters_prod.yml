@@ -1,0 +1,25 @@
+parameters:
+    database_host: PloutosDB
+    database_port: 3306
+    database_name: pagcor_db
+    database_user: bo_api_admin
+    database_password: '~~~CENSORED~~~'
+
+    database_host_pandora: PloutosDB
+    database_port_pandora: 3306
+    database_name_pandora: blueberrydb
+    database_user_pandora: bo_api_pandora
+    database_password_pandora: '~~~CENSORED~~~'
+
+    pandora_api_endpoint: 'http://3.113.19.211:5001'
+    pandora_api_token: 5862a8da-0298-4e5e-93ec-a50648d37cf7-4371ac8b-1435-4c4d-835a-484efb467b2c
+    affiliate_api_endpoint: 'http://3.113.19.211:5002'
+    affiliate_api_token: 5862a8da-0298-4e5e-93ec-a50648d37cf7-4371ac8b-1435-4c4d-835a-484efb467b2c
+
+    single_sign_on_token_generator: https://api.globalcomrci.com
+    single_sign_on_response_type: code
+    single_sign_on_client_secret: 74f66d03-6484-46e4-9686-e371eefbe3da
+    single_sign_on_client_id: 670aeb56-476a-41ac-953f-c0ae903f9ef2
+    pagcor_athena_portal: https://billing.globalcomrci.com
+
+    cms_management: null

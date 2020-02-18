@@ -1,0 +1,29 @@
+version: '3.3'
+services:
+  ploutos:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: PloutosBO_Env
+    hostname: PloutosBO_Env
+    restart: always
+    networks:
+      - ploutos-backend
+    cap_add:
+      - NET_ADMIN
+    privileged: true
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+      - /var/docker/ploutos-bo-env/php/php-fpm.d/zzz-www.conf:/etc/php-fpm.d/zzz-www.conf:ro
+      - /var/docker/ploutos-bo-env/nginx/conf.d:/etc/nginx/conf.d:ro
+      - /var/docker/ploutos-bo-env/api/app/config/parameters_prod.yml:/usr/local/ploutos/bo-api/app/config/parameters_prod.yml:ro
+      - /var/docker/ploutos-bo-env/athena/athena-apiconnector-svc.sh:/usr/local/ploutos/athena-api/athena-apiconnector-svc.sh:ro
+    ports:
+      - '80:80'
+      - '443:443'
+      - '8585:8585'
+    command: /usr/sbin/init
+networks:
+  ploutos-backend:
+    external:
+      name: ploutos-backend

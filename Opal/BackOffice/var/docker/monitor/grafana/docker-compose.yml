@@ -1,0 +1,18 @@
+version: '3.3'
+services:
+  grafana:
+    image: grafana/grafana
+    container_name: Grafana
+    hostname: Grafana
+    restart: always
+    networks:
+      - ploutos-backend
+    expose:
+      - '3000'
+    volumes:
+      - ./conf/grafana.ini:/etc/grafana/grafana.ini:ro
+      - ../../storage/grafana/data:/var/lib/grafana:rw
+networks:
+  ploutos-backend:
+    external:
+      name: ploutos-backend

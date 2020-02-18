@@ -1,0 +1,26 @@
+version: '3.3'
+services:
+  db:
+    image: mariadb:5.5
+    build:
+      context: ./
+    container_name: PloutosDB
+    hostname: PloutosDB
+    restart: always
+    networks:
+        - ploutos-backend
+    environment:
+      TZ: "GMT-4"
+      MYSQL_ROOT_PASSWORD: "a^<#nL29Mr9xCg9kI{L0|X7bh3c{s5?1"
+    ports:
+      - '3306:3306'
+    expose:
+      - '3306'
+    volumes:
+      - /var/docker/storage/ploutos-db/data:/var/lib/mysql
+      - /var/docker/ploutos-db/conf.d:/etc/mysql/conf.d
+      - /var/docker/ploutos-db/log:/var/log/mysql
+networks:
+  ploutos-backend:
+    external:
+      name: ploutos-backend

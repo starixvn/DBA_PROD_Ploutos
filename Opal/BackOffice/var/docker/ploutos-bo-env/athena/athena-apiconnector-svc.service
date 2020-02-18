@@ -1,0 +1,12 @@
+[Unit]
+Description=Athena API Connector Service OP00098 and PR00190
+After=syslog.target
+
+[Service]
+SyslogIdentifier=athena-apiconnector-svc-op00098-pr00190
+ExecStart=/usr/local/ploutos/athena-api/athena-apiconnector-svc.sh
+User=root
+Type=simple
+
+[Install]
+WantedBy=multi-user.target

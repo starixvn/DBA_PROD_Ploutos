@@ -1,0 +1,19 @@
+version: '3.3'
+services:
+  prometheus:
+    image: prom/prometheus
+    user: '1000:1000'
+    container_name: Prometheus
+    hostname: Prometheus
+    restart: always
+    networks:
+      - ploutos-backend
+    expose:
+      - '9090'
+    volumes:
+      - /var/docker/monitor/prometheus/conf:/etc/prometheus:ro
+      - /var/docker/storage/prometheus/data:/prometheus:rw
+networks:
+  ploutos-backend:
+    external:
+      name: ploutos-backend
