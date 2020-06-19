@@ -1,0 +1,37 @@
+version: '3.3'
+services:
+  ploutos_bo:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ${APP_NAME}
+    hostname: ${APP_NAME}
+    networks:
+      ploutos_network:
+        alias:
+          - ${APP_NAME}
+    cap_add:
+      - NET_ADMIN
+    privileged: true
+    volumes:
+      - ${APP_CONF}/php-fpm/zzz-www.conf:/etc/php-fpm.d/zzz-www.conf:ro
+      - ${APP_CONF}/nginx/conf.d:/etc/nginx/conf.d:ro
+      - ${APP_WEB}/build:/usr/share/nginx/web:rw
+      - ${APP_API}:/usr/share/nginx/api:rw
+      - ${APP_LOG}/php:/var/log/php-fpm:rw
+      - ${APP_LOG}/nginx:/var/log/nginx:rw
+      - ${APP_API}/app/config/parameters_prod.yml:/usr/share/nginx/api/app/config/parameters_prod.yml:ro
+    ports:
+      - '${APP_PORT}:80'
+      - '443:443'
+      - '8585:8585'
+    restart: always
+    environment:
+      - NODE_ENV='${NODE_ENV}'
+      - NODE_ENVIRONMENT='${NODE_ENVIRONMENT}'
+      - NODE_ENV_ENDPOINT='${NODE_ENV_ENDPOINT}'
+    command: /usr/sbin/init
+networks:
+  ploutos_network:
+    external:
+      name: ${PLO_NETWORK}

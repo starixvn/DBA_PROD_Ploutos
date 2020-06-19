@@ -1,0 +1,26 @@
+version: '3.7'
+services:
+  ploutos_db:
+    image: mariadb:${MYQL_TAG}
+    container_name: ${APP_NAME}
+    hostname: ${APP_NAME}
+    restart: always
+    networks:
+      ploutos_network:
+        alias:
+          - ${APP_NAME}
+    environment:
+      TZ: '${MYSQL_TZ}'
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    ports:
+      - '${MYSQL_PORT}:3306'
+    expose:
+      - '${MYSQL_PORT}'
+    volumes:
+      - ${MYSQL_DATA}:/var/lib/mysql
+      - ${MYSQL_CONF}:/etc/mysql/conf.d
+      - ${MYSQL_LOG}:/var/log/mysql
+networks:
+  ploutos_network:
+    external:
+      name: ${PLO_NETWORK}

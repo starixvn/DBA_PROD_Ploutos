@@ -1,0 +1,43 @@
+version: '3.7'
+services:
+    ploutos_bo:
+        image: nginx:${NGINX_TAG}
+        container_name: ${APP_NAME}
+        hostname: ${APP_NAME}
+        restart: always
+        volumes:
+          - ${APP_WEB}/build:/var/www/web:ro
+          - ${APP_API}:/var/www/api:rw
+          - ${APP_CONF}/conf.d:/etc/nginx/conf.d:ro
+          - ${APP_LOG}/nginx:/var/log/nginx:rw
+        links:
+          - php
+        networks:
+          ploutos_network:
+            aliases:
+              - ${APP_NAME}
+        ports:
+          - '${APP_PORT}:80'
+          - '443:443'
+          - '8585:8585'
+    php:
+        build:
+          context: .
+          dockerfile: Dockerfile-${PLO_VERSION}
+          args:
+            PHP_TAG: ${PHP_TAG}
+        container_name: ploutos_php
+        hostname: ploutos_php
+        restart: always
+        volumes:
+          - ${APP_API}:/var/www/api:rw
+          - ${APP_CONF}/php/php_www.ini:/usr/local/etc/php/conf.d/php_www.ini:ro
+          - ${APP_LOG}/php:/var/log:rw
+        networks:
+          ploutos_network:
+            aliases:
+              - ploutos_php
+networks:
+  ploutos_network:
+    external:
+      name: ${PLO_NETWORK}
